@@ -1,4 +1,4 @@
-package append_and_delete;
+package algorithms.implementation.append_and_delete;
 
 import java.util.Scanner;
 

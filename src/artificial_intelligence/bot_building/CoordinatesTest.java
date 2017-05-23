@@ -1,4 +1,4 @@
-package artificial_intelligence.bot_building.bot_saves_princess;
+package artificial_intelligence.bot_building;
 
 import org.junit.jupiter.api.Test;
 

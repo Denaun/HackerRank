@@ -1,5 +1,8 @@
 package artificial_intelligence.bot_building.bot_saves_princess;
 
+import artificial_intelligence.bot_building.Coordinates;
+import artificial_intelligence.bot_building.Direction;
+
 import java.util.*;
 
 public class Solution {

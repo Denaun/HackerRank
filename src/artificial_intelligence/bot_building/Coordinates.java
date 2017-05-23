@@ -1,23 +1,23 @@
-package artificial_intelligence.bot_building.bot_saves_princess;
+package artificial_intelligence.bot_building;
 
-class Coordinates {
+public class Coordinates {
     private int x;
     private int y;
 
-    Coordinates() {
+    public Coordinates() {
     }
 
-    Coordinates(int x, int y) {
+    public Coordinates(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
-    Coordinates(Coordinates other) {
+    public Coordinates(Coordinates other) {
         this.x = other.x;
         this.y = other.y;
     }
 
-    Coordinates move(Direction direction) {
+    public Coordinates move(Direction direction) {
         switch (direction) {
         case LEFT:
             x -= 1;

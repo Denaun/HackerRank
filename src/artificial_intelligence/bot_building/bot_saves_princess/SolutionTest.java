@@ -1,5 +1,7 @@
 package artificial_intelligence.bot_building.bot_saves_princess;
 
+import artificial_intelligence.bot_building.Coordinates;
+import artificial_intelligence.bot_building.Direction;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

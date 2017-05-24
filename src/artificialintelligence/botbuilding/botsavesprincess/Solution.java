@@ -1,7 +1,7 @@
-package artificial_intelligence.bot_building.bot_saves_princess;
+package artificialintelligence.botbuilding.botsavesprincess;
 
-import artificial_intelligence.bot_building.Coordinates;
-import artificial_intelligence.bot_building.Direction;
+import artificialintelligence.botbuilding.Coordinates;
+import artificialintelligence.botbuilding.Direction;
 
 import java.util.*;
 

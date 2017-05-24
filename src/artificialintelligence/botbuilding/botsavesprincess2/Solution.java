@@ -1,8 +1,8 @@
-package artificial_intelligence.bot_building.bot_saves_princess_ii;
+package artificialintelligence.botbuilding.botsavesprincess2;
 
 
-import artificial_intelligence.bot_building.Coordinates;
-import artificial_intelligence.bot_building.Direction;
+import artificialintelligence.botbuilding.Coordinates;
+import artificialintelligence.botbuilding.Direction;
 
 import java.util.ArrayDeque;
 import java.util.Queue;

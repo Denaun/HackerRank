@@ -1,7 +1,7 @@
-package artificial_intelligence.bot_building.bot_clean_stochastic;
+package artificialintelligence.botbuilding.botcleanstochastic;
 
 
-import artificial_intelligence.bot_building.*;
+import artificialintelligence.botbuilding.*;
 
 import java.util.Scanner;
 

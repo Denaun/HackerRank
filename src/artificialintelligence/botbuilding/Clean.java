@@ -1,4 +1,4 @@
-package artificial_intelligence.bot_building;
+package artificialintelligence.botbuilding;
 
 public class Clean implements Action {
     @Override

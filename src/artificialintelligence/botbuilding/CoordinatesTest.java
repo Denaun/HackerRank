@@ -1,4 +1,4 @@
-package artificial_intelligence.bot_building;
+package artificialintelligence.botbuilding;
 
 import org.junit.jupiter.api.Test;
 

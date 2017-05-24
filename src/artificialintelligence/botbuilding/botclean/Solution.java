@@ -1,6 +1,6 @@
-package artificial_intelligence.bot_building.bot_clean;
+package artificialintelligence.botbuilding.botclean;
 
-import artificial_intelligence.bot_building.*;
+import artificialintelligence.botbuilding.*;
 
 import java.util.*;
 

@@ -1,8 +1,8 @@
-package artificial_intelligence.bot_building.bot_clean;
+package artificialintelligence.botbuilding.botclean;
 
-import artificial_intelligence.bot_building.Action;
-import artificial_intelligence.bot_building.Coordinates;
-import artificial_intelligence.bot_building.Move;
+import artificialintelligence.botbuilding.Action;
+import artificialintelligence.botbuilding.Coordinates;
+import artificialintelligence.botbuilding.Move;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

@@ -14,7 +14,8 @@ public class Solution {
         int numberOfDeletes = source.length() - commonLength;
         int numberOfAppends = objective.length() - commonLength;
         int freeSteps = steps - (numberOfDeletes + numberOfAppends);
-        return freeSteps >= 0 && (freeSteps == 0 || freeSteps % 2 == 0 || freeSteps > 2 * commonLength);
+        return freeSteps >= 0 &&
+               (freeSteps == 0 || freeSteps % 2 == 0 || freeSteps > 2 * commonLength);
     }
 
     public static void main(String[] args) {

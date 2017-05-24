@@ -30,7 +30,8 @@ public class Solution {
                 return current.origin;
             }
             for (Direction direction : Direction.values()) {
-                frontier.add(new State(new Coordinates(current.position).move(direction), current.origin));
+                frontier.add(new State(new Coordinates(current.position).move(direction),
+                                       current.origin));
             }
         }
         assert false;

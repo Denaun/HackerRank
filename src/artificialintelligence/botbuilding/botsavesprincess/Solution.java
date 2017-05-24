@@ -25,7 +25,8 @@ public class Solution {
                 return current.history;
             }
             for (Direction direction : Direction.values()) {
-                State newState = new State(new Coordinates(current.position), new ArrayList<>(current.history));
+                State newState = new State(new Coordinates(current.position),
+                                           new ArrayList<>(current.history));
                 newState.position.move(direction);
                 newState.history.add(direction);
                 frontier.add(newState);

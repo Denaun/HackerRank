@@ -11,7 +11,8 @@ public class Solution {
             private ArrayList<Action> history;
             private ArrayList<Coordinates> remainingDirt;
 
-            private State(Coordinates position, ArrayList<Action> history, ArrayList<Coordinates> remainingDirt) {
+            private State(Coordinates position, ArrayList<Action> history,
+                          ArrayList<Coordinates> remainingDirt) {
                 this.position = position;
                 this.history = history;
                 this.remainingDirt = remainingDirt;
@@ -69,7 +70,8 @@ public class Solution {
             for (Direction direction : Direction.values()) {
                 ArrayList<Action> newActions = new ArrayList<>(current.history);
                 newActions.add(new Move(direction));
-                State newState = new State(new Coordinates(current.position).move(direction), newActions,
+                State newState = new State(new Coordinates(current.position).move(direction),
+                                           newActions,
                                            current.remainingDirt);
                 if (!visited.contains(newState)) {
                     frontier.offer(newState);

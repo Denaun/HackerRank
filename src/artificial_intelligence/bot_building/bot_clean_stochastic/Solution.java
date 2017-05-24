@@ -1,8 +1,7 @@
 package artificial_intelligence.bot_building.bot_clean_stochastic;
 
 
-import artificial_intelligence.bot_building.Coordinates;
-import artificial_intelligence.bot_building.Direction;
+import artificial_intelligence.bot_building.*;
 
 import java.util.Scanner;
 
@@ -56,28 +55,5 @@ public class Solution {
         }
 
         nextMove(r, c, grid);
-    }
-
-    interface Action {
-    }
-
-    static class Move implements Action {
-        Direction direction;
-
-        Move(Direction direction) {
-            this.direction = direction;
-        }
-
-        @Override
-        public String toString() {
-            return direction.toString();
-        }
-    }
-
-    static class Clean implements Action {
-        @Override
-        public String toString() {
-            return "CLEAN";
-        }
     }
 }

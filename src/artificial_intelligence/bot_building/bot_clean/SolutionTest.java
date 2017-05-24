@@ -1,6 +1,8 @@
 package artificial_intelligence.bot_building.bot_clean;
 
+import artificial_intelligence.bot_building.Action;
 import artificial_intelligence.bot_building.Coordinates;
+import artificial_intelligence.bot_building.Move;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -10,10 +12,10 @@ import java.util.Collection;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class SolutionTest {
-    private void move(Coordinates from, Iterable<Solution.Action> steps, Collection<Coordinates> dirt) {
-        for (Solution.Action step : steps) {
-            if (step instanceof Solution.Move) {
-                from.move(((Solution.Move) step).direction);
+    private void move(Coordinates from, Iterable<Action> steps, Collection<Coordinates> dirt) {
+        for (Action step : steps) {
+            if (step instanceof Move) {
+                from.move(((Move) step).getDirection());
             } else {
                 dirt.remove(from);
             }
@@ -30,7 +32,7 @@ class SolutionTest {
                                                                      new Coordinates(3, 2),
                                                                      new Coordinates(2, 3),
                                                                      new Coordinates(4, 4)));
-        Iterable<Solution.Action> plan = Solution.generatePlan(bot, dirt);
+        Iterable<Action> plan = Solution.generatePlan(bot, dirt);
         move(bot, plan, dirt);
         assertEquals(0, dirt.size());
     }

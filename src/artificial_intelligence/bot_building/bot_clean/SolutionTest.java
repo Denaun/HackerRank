@@ -1,12 +1,13 @@
 package artificial_intelligence.bot_building.bot_clean;
 
 import artificial_intelligence.bot_building.Coordinates;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class SolutionTest {
     private void move(Coordinates from, Iterable<Solution.Action> steps, Collection<Coordinates> dirt) {
@@ -31,6 +32,6 @@ class SolutionTest {
                                                                      new Coordinates(4, 4)));
         Iterable<Solution.Action> plan = Solution.generatePlan(bot, dirt);
         move(bot, plan, dirt);
-        Assertions.assertEquals(0, dirt.size());
+        assertEquals(0, dirt.size());
     }
 }

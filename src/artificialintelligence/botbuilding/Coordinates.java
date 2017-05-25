@@ -35,6 +35,10 @@ public class Coordinates {
         return this;
     }
 
+    int getL1DistanceFrom(Coordinates other) {
+        return Math.abs(x - other.x) + Math.abs(y - other.y);
+    }
+
     public int getX() {
         return x;
     }

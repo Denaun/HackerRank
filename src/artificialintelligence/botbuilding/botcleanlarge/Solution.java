@@ -2,93 +2,27 @@ package artificialintelligence.botbuilding.botcleanlarge;
 
 import artificialintelligence.botbuilding.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Solution {
-    static Iterable<Action> generatePlan(Coordinates start, Collection<Coordinates> dirt) {
-        class State implements Comparable<State> {
-            private Coordinates position;
-            private ArrayList<Action> history;
-            private ArrayList<Coordinates> remainingDirt;
-
-            private State(Coordinates position, ArrayList<Action> history,
-                          ArrayList<Coordinates> remainingDirt) {
-                this.position = position;
-                this.history = history;
-                this.remainingDirt = remainingDirt;
-            }
-
-            /**
-             * @return Simple A* weight (depth + a simple admissible heuristic).
-             */
-            private int weight() {
-                // Favor cleaner states, even if longer.
-                return this.history.size() + this.remainingDirt.size() * 100;
-            }
-
-            @Override
-            public int compareTo(State o) {
-                return this.weight() - o.weight();
-            }
-
-            @Override
-            public boolean equals(Object o) {
-                if (this == o) return true;
-                if (o == null || getClass() != o.getClass()) return false;
-
-                State state = (State) o;
-
-                return position.equals(state.position) && remainingDirt.equals(state.remainingDirt);
-            }
-
-            @Override
-            public int hashCode() {
-                int result = position.hashCode();
-                result = 31 * result + remainingDirt.hashCode();
-                return result;
-            }
+    private static Action generatePlan(Coordinates start, Coordinates dirt) {
+        if (start.equals(dirt)) {
+            return new Clean();
         }
-
-        // Allow up to 10s for computations: this will lead to suboptimal solutions in these cases.
-        final long timeLimit = 10_000_000_000L;
-        final long startTime = System.nanoTime();
-
-        Queue<State> frontier = new PriorityQueue<>();
-        frontier.add(new State(start, new ArrayList<>(), new ArrayList<>(dirt)));
-        Collection<State> visited = new HashSet<>();
-        while (!frontier.isEmpty()) {
-            State current = frontier.remove();
-            if (current.remainingDirt.isEmpty()) return current.history;
-            // If we ran out of  time, we can consider the current solution as the best solution.
-            long estimatedTime = System.nanoTime() - startTime;
-            if (estimatedTime > timeLimit) return current.history;
-
-            if (current.remainingDirt.contains(current.position)) {
-                ArrayList<Action> newActions = new ArrayList<>(current.history);
-                newActions.add(new Clean());
-                ArrayList<Coordinates> newDirt = new ArrayList<>(current.remainingDirt);
-                newDirt.remove(current.position);
-                State newState = new State(current.position, newActions, newDirt);
-                if (!visited.contains(newState)) {
-                    frontier.offer(newState);
-                    visited.add(newState);
-                }
-                continue;
-            }
-            for (Direction direction : Direction.values()) {
-                ArrayList<Action> newActions = new ArrayList<>(current.history);
-                newActions.add(new Move(direction));
-                State newState = new State(new Coordinates(current.position).move(direction),
-                                           newActions,
-                                           current.remainingDirt);
-                if (!visited.contains(newState)) {
-                    frontier.offer(newState);
-                    visited.add(newState);
-                }
-            }
+        if (start.getX() > dirt.getX()) {
+            return new Move(Direction.LEFT);
         }
-        assert false;
-        return Collections.emptyList();
+        if (start.getX() < dirt.getX()) {
+            return new Move(Direction.RIGHT);
+        }
+        if (start.getY() > dirt.getY()) {
+            return new Move(Direction.UP);
+        }
+        if (start.getY() < dirt.getY()) {
+            return new Move(Direction.DOWN);
+        }
+        throw new AssertionError();
     }
 
     @SuppressWarnings("WeakerAccess")
@@ -107,8 +41,12 @@ public class Solution {
             System.out.println(new Clean().toString());
             return;
         }
-        Iterable<Action> plan = generatePlan(bot, dirt);
-        System.out.println(plan.iterator().next().toString());
+        Solver solver = new Solver(bot, dirt);
+        if (!solver.solveAStar(2_000_000_000L)) {
+            solver.solveSa(100_000);
+        }
+        Iterable<Coordinates> plan = solver.getSolution();
+        System.out.println(generatePlan(bot, plan.iterator().next()).toString());
     }
 
     public static void main(String[] args) {

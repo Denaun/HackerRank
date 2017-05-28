@@ -43,7 +43,7 @@ public class Solution {
 
         }
 
-        Solver solver = new Solver(new Coordinates(r, c), map);
+        Solver solver = new Solver(new Coordinates(c, r), map);
         solver.solve();
 
         try {

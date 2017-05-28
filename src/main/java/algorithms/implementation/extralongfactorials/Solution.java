@@ -1,4 +1,4 @@
-package algorithms.implementation.extra_long_factorials;
+package algorithms.implementation.extralongfactorials;
 
 import java.math.BigInteger;
 import java.util.Scanner;

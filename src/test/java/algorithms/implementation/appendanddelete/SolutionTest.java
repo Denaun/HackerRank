@@ -1,4 +1,4 @@
-package algorithms.implementation.append_and_delete;
+package algorithms.implementation.appendanddelete;
 
 import org.junit.Assert;
 import org.junit.Test;

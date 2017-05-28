@@ -1,7 +1,6 @@
 package artificialintelligence.botbuilding.botcleanstochastic;
 
 import artificialintelligence.botbuilding.*;
-
 import org.junit.Assert;
 import org.junit.Test;
 

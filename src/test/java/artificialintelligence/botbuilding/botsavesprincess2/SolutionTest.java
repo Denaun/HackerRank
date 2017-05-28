@@ -2,15 +2,17 @@ package artificialintelligence.botbuilding.botsavesprincess2;
 
 import artificialintelligence.botbuilding.Coordinates;
 import artificialintelligence.botbuilding.Direction;
-import org.junit.jupiter.api.Test;
+import org.junit.Assert;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+public class SolutionTest {
+    public SolutionTest() {
+    }
 
-class SolutionTest {
     @Test
-    void example() {
+    public void example() {
         Coordinates mario = new Coordinates(3, 2);
         Coordinates princess = new Coordinates(0, 2);
-        assertEquals(Direction.LEFT, Solution.nextDirection(mario, princess));
+        Assert.assertEquals(Direction.LEFT, Solution.nextDirection(mario, princess));
     }
 }

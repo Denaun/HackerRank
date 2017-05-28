@@ -1,6 +1,5 @@
 package artificialintelligence.botbuilding.botsavesprincess2;
 
-
 import artificialintelligence.botbuilding.Coordinates;
 import artificialintelligence.botbuilding.Direction;
 

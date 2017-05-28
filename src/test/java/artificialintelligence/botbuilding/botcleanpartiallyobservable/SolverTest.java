@@ -4,12 +4,15 @@ import artificialintelligence.botbuilding.Action;
 import artificialintelligence.botbuilding.Coordinates;
 import artificialintelligence.botbuilding.Direction;
 import artificialintelligence.botbuilding.Move;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.Assert;
+import org.junit.Test;
 
-class SolverTest {
+public class SolverTest {
+    public SolverTest() {
+    }
+
     @Test
-    void testSolve() {
+    public void testSolve() {
         Map map = new Map(5);
         map.notifyClean(0, 0);
         map.notifyClean(1, 0);
@@ -17,11 +20,11 @@ class SolverTest {
         map.notifyDirty(1, 1);
         Solver solver = new Solver(new Coordinates(0, 0), map);
         boolean found = solver.solve();
-        Assertions.assertTrue(found);
+        Assert.assertTrue(found);
         Action action = solver.getNextMove();
-        Assertions.assertTrue(action instanceof Move);
+        Assert.assertTrue(action instanceof Move);
         Move move = (Move) action;
-        Assertions.assertTrue(
+        Assert.assertTrue(
                 move.getDirection() == Direction.RIGHT || move.getDirection() == Direction.DOWN);
     }
 }

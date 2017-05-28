@@ -1,9 +1,10 @@
 package artificialintelligence.botbuilding.botcleanpartiallyobservable;
 
+import junit.framework.TestCase;
 import org.junit.Assert;
 import org.junit.Test;
 
-import junit.framework.TestCase;
+import java.io.*;
 
 public class MapTest {
     public MapTest() {
@@ -33,22 +34,46 @@ public class MapTest {
         try {
             map.isClean(6, 6);
             TestCase.fail("Expected exception was not occured.");
-        } catch(IndexOutOfBoundsException ignored) {
+        } catch (IndexOutOfBoundsException ignored) {
         }
         try {
             map.isDirty(1, 8);
             TestCase.fail("Expected exception was not occured.");
-        } catch(IndexOutOfBoundsException ignored) {
+        } catch (IndexOutOfBoundsException ignored) {
         }
         try {
             map.notifyClean(9, 2);
             TestCase.fail("Expected exception was not occured.");
-        } catch(IndexOutOfBoundsException ignored) {
+        } catch (IndexOutOfBoundsException ignored) {
         }
         try {
             map.notifyDirty(9, 8);
             TestCase.fail("Expected exception was not occured.");
-        } catch(IndexOutOfBoundsException ignored) {
+        } catch (IndexOutOfBoundsException ignored) {
         }
+    }
+
+    @Test
+    public void testSerializable() throws IOException, ClassNotFoundException {
+        Map originalMap = new Map(1);
+        originalMap.notifyClean(0, 0);
+
+        String pathname = "test.ser";
+        FileOutputStream fileOut = new FileOutputStream(pathname);
+        ObjectOutputStream out = new ObjectOutputStream(fileOut);
+        out.writeObject(originalMap);
+        out.close();
+        fileOut.close();
+
+        FileInputStream fileIn = new FileInputStream(pathname);
+        ObjectInputStream in = new ObjectInputStream(fileIn);
+        Map readMap = (Map) in.readObject();
+        in.close();
+        fileIn.close();
+
+        Assert.assertTrue(new File(pathname).delete());
+
+        Assert.assertEquals(originalMap.size(), readMap.size());
+        Assert.assertTrue(readMap.isClean(0, 0));
     }
 }

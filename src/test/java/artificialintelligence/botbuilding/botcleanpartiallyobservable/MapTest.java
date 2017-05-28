@@ -3,6 +3,8 @@ package artificialintelligence.botbuilding.botcleanpartiallyobservable;
 import org.junit.Assert;
 import org.junit.Test;
 
+import junit.framework.TestCase;
+
 public class MapTest {
     public MapTest() {
     }
@@ -27,5 +29,26 @@ public class MapTest {
     public void testSize() {
         Map map = new Map(5);
         Assert.assertEquals(5, map.size());
+        map.isClean(2, 3);
+        try {
+            map.isClean(6, 6);
+            TestCase.fail("Expected exception was not occured.");
+        } catch(IndexOutOfBoundsException ignored) {
+        }
+        try {
+            map.isDirty(1, 8);
+            TestCase.fail("Expected exception was not occured.");
+        } catch(IndexOutOfBoundsException ignored) {
+        }
+        try {
+            map.notifyClean(9, 2);
+            TestCase.fail("Expected exception was not occured.");
+        } catch(IndexOutOfBoundsException ignored) {
+        }
+        try {
+            map.notifyDirty(9, 8);
+            TestCase.fail("Expected exception was not occured.");
+        } catch(IndexOutOfBoundsException ignored) {
+        }
     }
 }

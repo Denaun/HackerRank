@@ -4,12 +4,6 @@ import java.io.Serializable;
 import java.util.Arrays;
 
 class Map implements Serializable {
-    private enum State {
-        UNKNOWN,
-        CLEAN,
-        DIRTY
-    }
-
     private State[][] states;
 
     Map(int size) {
@@ -25,6 +19,13 @@ class Map implements Serializable {
 
     boolean isClean(int x, int y) {
         return states[y][x] == State.CLEAN;
+    }
+
+    boolean isColumnClean(int x) {
+        for (State[] state : states) {
+            if (state[x] != State.CLEAN) return false;
+        }
+        return true;
     }
 
     void notifyDirty(int x, int y) {
@@ -59,5 +60,11 @@ class Map implements Serializable {
             buffer.append('\n');
         }
         return buffer.toString();
+    }
+
+    private enum State {
+        UNKNOWN,
+        CLEAN,
+        DIRTY
     }
 }

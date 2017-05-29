@@ -1,6 +1,8 @@
 package artificialintelligence.botbuilding.botcleanpartiallyobservable;
 
-import artificialintelligence.botbuilding.*;
+import artificialintelligence.botbuilding.Action;
+import artificialintelligence.botbuilding.Coordinates;
+import artificialintelligence.botbuilding.Validator;
 import junit.framework.TestCase;
 import org.junit.Assert;
 import org.junit.Test;
@@ -48,11 +50,11 @@ public class SolverTest {
 
     @Test
     public void testSerializable() {
-        Direction aDirection = Direction.DOWN;
-        Solver solver = new Solver(new Coordinates(), new Map(0));
-        solver.setSerializableState(aDirection);
+        Solver solver = new Solver(new Coordinates(), new Map(1));
+        solver.solve();
         Object anObject = solver.getSerializableState();
-        Assert.assertEquals(aDirection, anObject);
+        Assert.assertNotEquals(null, anObject);
+        solver.setSerializableState(anObject);
 
         solver.setSerializableState(null);
         anObject = solver.getSerializableState();
@@ -84,25 +86,6 @@ public class SolverTest {
         int steps = solve(validator, true);
         Assert.assertTrue(validator.isFinished());
         Assert.assertEquals(11, steps);
-    }
-
-    @Test
-    public void testSolve_example3() {
-        Map map = new Map(5);
-        map.notifyClean(0, 0);
-        map.notifyClean(1, 0);
-        map.notifyClean(2, 0);
-        map.notifyClean(0, 1);
-        map.notifyClean(1, 1);
-        map.notifyClean(2, 1);
-        Solver solver = new Solver(new Coordinates(1, 0), map);
-        solver.setSerializableState(Direction.UP);
-        boolean found = solver.solve();
-        Assert.assertTrue(found);
-        Action action = solver.getNextMove();
-        Assert.assertTrue(action instanceof Move);
-        Move move = (Move) action;
-        Assert.assertEquals(Direction.RIGHT, move.getDirection());
     }
 
     @Test
@@ -140,6 +123,6 @@ public class SolverTest {
         }
         double averageSteps = (double) totalSteps / tests;
         System.err.println(averageSteps);
-        Assert.assertTrue(averageSteps < 23);
+        Assert.assertTrue(averageSteps < 21);
     }
 }

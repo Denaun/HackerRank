@@ -43,9 +43,6 @@ public class Solution {
 
         }
 
-        Solver solver = new Solver(new Coordinates(c, r), map);
-        solver.solve();
-
         try {
             FileOutputStream fileOut = new FileOutputStream(FILE_NAME);
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
@@ -55,6 +52,11 @@ public class Solution {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        System.err.println(map);
+
+        Solver solver = new Solver(new Coordinates(c, r), map);
+        solver.solve();
 
         System.out.println(solver.getNextMove().toString());
     }

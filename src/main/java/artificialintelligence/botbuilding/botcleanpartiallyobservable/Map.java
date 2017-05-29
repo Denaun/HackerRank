@@ -38,4 +38,26 @@ class Map implements Serializable {
     int size() {
         return states.length;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder buffer = new StringBuilder();
+        for (State[] state : states) {
+            for (State aState : state) {
+                switch (aState) {
+                case UNKNOWN:
+                    buffer.append('o');
+                    break;
+                case CLEAN:
+                    buffer.append('-');
+                    break;
+                case DIRTY:
+                    buffer.append('d');
+                    break;
+                }
+            }
+            buffer.append('\n');
+        }
+        return buffer.toString();
+    }
 }

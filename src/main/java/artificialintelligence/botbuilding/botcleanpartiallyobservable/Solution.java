@@ -28,13 +28,13 @@ public class Solution {
             for (int x = 0; x < grid[y].length(); x++) {
                 switch (grid[y].charAt(x)) {
                 case '-':
+                case 'b':
                     map.notifyClean(x, y);
                     break;
                 case 'd':
                     map.notifyDirty(x, y);
                     break;
                 case 'o':
-                case 'b':
                     break;
                 default:
                     throw new AssertionError();

@@ -4,6 +4,12 @@ import java.io.Serializable;
 import java.util.Arrays;
 
 class Map implements Serializable {
+    private enum State {
+        UNKNOWN,
+        CLEAN,
+        DIRTY
+    }
+
     private State[][] states;
 
     Map(int size) {
@@ -62,9 +68,18 @@ class Map implements Serializable {
         return buffer.toString();
     }
 
-    private enum State {
-        UNKNOWN,
-        CLEAN,
-        DIRTY
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Map map = (Map) o;
+
+        return Arrays.deepEquals(states, map.states);
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.deepHashCode(states);
     }
 }

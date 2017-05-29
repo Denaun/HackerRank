@@ -39,7 +39,7 @@ public class SolverTest {
             boolean found = solver.solve();
             Assert.assertTrue(found);
             Action nextMove = solver.getNextMove();
-            System.err.println(nextMove);
+            if (debug) System.err.println(nextMove);
             validator.performAction(nextMove);
             serializedState = solver.getSerializableState();
         }

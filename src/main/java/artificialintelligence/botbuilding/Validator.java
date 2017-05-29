@@ -7,18 +7,18 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-class Validator {
+public class Validator {
     private final int size;
     private Coordinates bot;
     private Set<Coordinates> dirt;
 
-    Validator(int size, Coordinates bot, Collection<Coordinates> dirt) {
+    public Validator(int size, Coordinates bot, Collection<Coordinates> dirt) {
         this.size = 5;
         this.bot = bot;
         this.dirt = new HashSet<>(dirt);
     }
 
-    void performAction(Action action) throws InvalidObjectException {
+    public void performAction(Action action) throws InvalidObjectException {
         if (action instanceof Move) {
             bot.move(((Move) action).getDirection());
             if (bot.getX() < 0 || bot.getY() < 0 || bot.getX() >= size || bot.getY() >= size) {
@@ -36,11 +36,11 @@ class Validator {
         throw new InvalidObjectException("Unexpected action.");
     }
 
-    Coordinates getBot() {
+    public Coordinates getBot() {
         return bot;
     }
 
-    Map asMap(int visibility) {
+    public Map asMap(int visibility) {
         Map result = new Map(size);
         int minX = Math.max(bot.getX() - visibility, 0);
         int minY = Math.max(bot.getY() - visibility, 0);
@@ -58,7 +58,7 @@ class Validator {
         return result;
     }
 
-    boolean isFinished() {
+    public boolean isFinished() {
         return dirt.isEmpty();
     }
 }

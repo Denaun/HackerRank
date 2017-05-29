@@ -1,9 +1,6 @@
-package artificialintelligence.botbuilding.botcleanpartiallyobservable;
+package artificialintelligence.botbuilding;
 
-import artificialintelligence.botbuilding.Action;
-import artificialintelligence.botbuilding.Clean;
-import artificialintelligence.botbuilding.Coordinates;
-import artificialintelligence.botbuilding.Move;
+import artificialintelligence.botbuilding.botcleanpartiallyobservable.Map;
 
 import java.io.InvalidObjectException;
 import java.util.Collection;
@@ -15,13 +12,13 @@ class Validator {
     private Coordinates bot;
     private Set<Coordinates> dirt;
 
-    public Validator(int size, Coordinates bot, Collection<Coordinates> dirt) {
+    Validator(int size, Coordinates bot, Collection<Coordinates> dirt) {
         this.size = 5;
         this.bot = bot;
         this.dirt = new HashSet<>(dirt);
     }
 
-    public void performAction(Action action) throws InvalidObjectException {
+    void performAction(Action action) throws InvalidObjectException {
         if (action instanceof Move) {
             bot.move(((Move) action).getDirection());
             if (bot.getX() < 0 || bot.getY() < 0 || bot.getX() >= size || bot.getY() >= size) {
@@ -39,11 +36,11 @@ class Validator {
         throw new InvalidObjectException("Unexpected action.");
     }
 
-    public Coordinates getBot() {
+    Coordinates getBot() {
         return bot;
     }
 
-    public Map asMap(int visibility) {
+    Map asMap(int visibility) {
         Map result = new Map(size);
         int minX = Math.max(bot.getX() - visibility, 0);
         int minY = Math.max(bot.getY() - visibility, 0);
@@ -61,7 +58,7 @@ class Validator {
         return result;
     }
 
-    public boolean isFinished() {
+    boolean isFinished() {
         return dirt.isEmpty();
     }
 }

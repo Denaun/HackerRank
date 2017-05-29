@@ -1,9 +1,6 @@
-package artificialintelligence.botbuilding.botcleanpartiallyobservable;
+package artificialintelligence.botbuilding;
 
-import artificialintelligence.botbuilding.Clean;
-import artificialintelligence.botbuilding.Coordinates;
-import artificialintelligence.botbuilding.Direction;
-import artificialintelligence.botbuilding.Move;
+import artificialintelligence.botbuilding.botcleanpartiallyobservable.Map;
 import junit.framework.TestCase;
 import org.junit.Assert;
 import org.junit.Test;

@@ -8,7 +8,7 @@ class Solver {
     private Coordinates start;
     private Map map;
     private Action nextAction;
-    private State state;
+    private SolverState state;
     Solver(Coordinates start, Map map) {
         this.start = start;
         this.map = map;
@@ -23,7 +23,7 @@ class Solver {
         }
 
         if (state == null) {
-            state = new State();
+            state = new SolverState();
         }
         if (state.verticalDirection == null || state.horizontalDirection == null) {
             if (start.getX() < map.size() / 2) {
@@ -90,12 +90,13 @@ class Solver {
         return state;
     }
 
-    void setSerializableState(Object state) {
-        this.state = (State) state;
-    }
-
-    private class State implements Serializable {
-        Direction verticalDirection;
-        Direction horizontalDirection;
+    void setSerializableState(Serializable state) {
+        this.state = (SolverState) state;
     }
 }
+
+class SolverState implements Serializable {
+    Direction verticalDirection;
+    Direction horizontalDirection;
+}
+

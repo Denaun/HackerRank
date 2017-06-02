@@ -3,11 +3,10 @@ package artificialintelligence.botbuilding.botcleanpartiallyobservable;
 import artificialintelligence.botbuilding.Action;
 import artificialintelligence.botbuilding.Coordinates;
 import artificialintelligence.botbuilding.Validator;
-import junit.framework.TestCase;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.io.InvalidObjectException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -20,7 +19,7 @@ public class SolverTest {
     private int solve(Validator validator, boolean debug) throws InvalidObjectException {
         int size = validator.asMap(0).size();
         Map explored = new Map(size);
-        Object serializedState = null;
+        Serializable serializedState = null;
         int steps;
         for (steps = 0; steps < 200; steps++) {
             if (validator.isFinished()) break;
@@ -49,22 +48,24 @@ public class SolverTest {
     }
 
     @Test
-    public void testSerializable() {
+    public void testSerializable() throws IOException {
         Solver solver = new Solver(new Coordinates(), new Map(1));
         solver.solve();
-        Object anObject = solver.getSerializableState();
+        Serializable anObject = solver.getSerializableState();
         Assert.assertNotEquals(null, anObject);
         solver.setSerializableState(anObject);
+
+        String pathname = "test.ser";
+        FileOutputStream fileOut = new FileOutputStream(pathname);
+        ObjectOutputStream out = new ObjectOutputStream(fileOut);
+        out.writeObject(anObject);
+        out.close();
+        fileOut.close();
+        Assert.assertTrue(new File(pathname).delete());
 
         solver.setSerializableState(null);
         anObject = solver.getSerializableState();
         Assert.assertEquals(null, anObject);
-
-        try {
-            solver.setSerializableState(solver);
-            TestCase.fail("Expected exception was not occured.");
-        } catch (ClassCastException ignored) {
-        }
     }
 
     @Test

@@ -1,8 +1,6 @@
 package artificialintelligence.botbuilding.botcleanpartiallyobservable;
 
 import artificialintelligence.botbuilding.Coordinates;
-import artificialintelligence.botbuilding.Direction;
-import artificialintelligence.botbuilding.Move;
 
 import java.io.*;
 import java.util.Scanner;
@@ -12,13 +10,13 @@ public class Solution {
 
     private static void nextMove(int r, int c, String[] grid) {
         Map map;
-        Object solverState;
+        SolverState solverState;
         try {
             FileInputStream fileIn = new FileInputStream(FILE_NAME);
             ObjectInputStream in = new ObjectInputStream(fileIn);
             map = (Map) in.readObject();
             if (map.size() != grid.length) throw new AssertionError();
-            solverState = in.readObject();
+            solverState = (SolverState) in.readObject();
             in.close();
             fileIn.close();
         } catch (FileNotFoundException e) {
@@ -54,7 +52,6 @@ public class Solution {
         solver.setSerializableState(solverState);
         solver.solve();
 
-        System.err.println(new Move((Direction) solver.getSerializableState()).toString());
         System.out.println(solver.getNextMove().toString());
 
         try {

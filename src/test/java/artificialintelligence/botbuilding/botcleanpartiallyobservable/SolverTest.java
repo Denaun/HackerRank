@@ -40,16 +40,21 @@ public class SolverTest {
             boolean found = solver.solve();
             Assert.assertTrue(found);
             Action nextMove = solver.getNextMove();
-            if (debug) System.err.println(nextMove);
             validator.performAction(nextMove);
             serializedState = solver.getSerializableState();
+            if (debug) {
+                System.err.print(nextMove);
+                System.err.print(" -> ");
+                System.err.println(validator.getBot());
+            }
         }
         return steps;
     }
 
     @Test
     public void testSerializable() throws IOException {
-        Solver solver = new Solver(new Coordinates(), new Map(1));
+        // Simple map where the only action should be "clean".
+        Solver solver = new Solver(new Coordinates(), new Map(2));
         solver.solve();
         Serializable anObject = solver.getSerializableState();
         Assert.assertNotEquals(null, anObject);
@@ -75,7 +80,7 @@ public class SolverTest {
                                             Collections.singletonList(new Coordinates(1, 1)));
         int steps = solve(validator, true);
         Assert.assertTrue(validator.isFinished());
-        Assert.assertEquals(7, steps);
+        Assert.assertEquals(3, steps);
     }
 
     @Test
@@ -86,7 +91,23 @@ public class SolverTest {
                                                           new Coordinates(1, 1)));
         int steps = solve(validator, true);
         Assert.assertTrue(validator.isFinished());
-        Assert.assertEquals(11, steps);
+        Assert.assertEquals(9, steps);
+    }
+
+    @Test
+    public void testSolve_example3() throws InvalidObjectException {
+        int size = 5;
+        Validator validator = new Validator(size, new Coordinates(2, 3),
+                                            Arrays.asList(new Coordinates(4, 0),
+                                                          new Coordinates(3, 2),
+                                                          new Coordinates(2, 2),
+                                                          new Coordinates(3, 2),
+                                                          new Coordinates(0, 4),
+                                                          new Coordinates(1, 2),
+                                                          new Coordinates(2, 3)));
+        int steps = solve(validator, true);
+        Assert.assertTrue(validator.isFinished());
+        Assert.assertEquals(37, steps);
     }
 
     @Test
@@ -97,7 +118,7 @@ public class SolverTest {
 
         int steps = solve(validator, true);
         Assert.assertTrue(validator.isFinished());
-        Assert.assertEquals(11, steps);
+        Assert.assertEquals(3, steps);
     }
 
     @Test
@@ -111,10 +132,12 @@ public class SolverTest {
             for (int i = 0; i < rng.nextInt(size * size - 1) + 1; i++) {
                 dirt.add(new Coordinates(rng.nextInt(size), rng.nextInt(size)));
             }
-            Validator validator = new Validator(size,
-                                                new Coordinates(rng.nextInt(size),
-                                                                rng.nextInt(size)),
-                                                dirt);
+            Coordinates bot = new Coordinates(rng.nextInt(size),
+                                              rng.nextInt(size));
+            Validator validator = new Validator(size, bot, dirt);
+            System.err.print(bot.getX());
+            System.err.print(" ");
+            System.err.println(bot.getY());
             System.err.println(validator.asMap(size * size));
 
             int steps = solve(validator, false);
@@ -124,6 +147,6 @@ public class SolverTest {
         }
         double averageSteps = (double) totalSteps / tests;
         System.err.println(averageSteps);
-        Assert.assertTrue(averageSteps < 21);
+        Assert.assertTrue(averageSteps < 34);
     }
 }

@@ -1,5 +1,7 @@
 package artificialintelligence.botbuilding.botcleanpartiallyobservable;
 
+import artificialintelligence.botbuilding.Coordinates;
+
 import java.io.Serializable;
 import java.util.Arrays;
 
@@ -38,6 +40,11 @@ public class Map implements Serializable {
 
     int size() {
         return states.length;
+    }
+
+    boolean outOfBounds(Coordinates position) {
+        return position.getX() < 0 || position.getX() >= size() ||
+               position.getY() < 0 || position.getY() >= size();
     }
 
     @Override

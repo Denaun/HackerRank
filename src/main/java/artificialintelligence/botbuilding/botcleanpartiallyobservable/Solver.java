@@ -5,10 +5,11 @@ import artificialintelligence.botbuilding.*;
 import java.io.Serializable;
 
 class Solver {
-    private Coordinates start;
-    private Map map;
+    private final Coordinates start;
+    private final Map map;
     private Action nextAction;
     private SolverState state;
+
     Solver(Coordinates start, Map map) {
         this.start = start;
         this.map = map;
@@ -24,62 +25,19 @@ class Solver {
 
         if (state == null) {
             state = new SolverState();
-        }
-        if (state.verticalDirection == null || state.horizontalDirection == null) {
-            if (start.getX() < map.size() / 2) {
-                if (start.getX() > 0) {
-                    nextAction = new Move(Direction.LEFT);
-                    return true;
-                }
-                state.horizontalDirection = Direction.RIGHT;
-            } else {
-                if (start.getX() < map.size() - 1) {
-                    nextAction = new Move(Direction.RIGHT);
-                    return true;
-                }
-                state.horizontalDirection = Direction.LEFT;
-            }
-            if (start.getY() < map.size() / 2) {
-                if (start.getY() > 0) {
-                    nextAction = new Move(Direction.UP);
-                    return true;
-                }
-                state.verticalDirection = Direction.DOWN;
-            } else {
-                if (start.getY() < map.size() - 1) {
-                    nextAction = new Move(Direction.DOWN);
-                    return true;
-                }
-                state.verticalDirection = Direction.UP;
-            }
+            state.center = new Coordinates(start);
+            state.next = new Coordinates(start);
         }
 
-        if (start.getY() <= 1 && map.isColumnClean(start.getX())) {
-            state.verticalDirection = Direction.DOWN;
-            nextAction = new Move(state.horizontalDirection);
-            return true;
+        if (start.equals(state.next)) {
+            Coordinates destination = state.next;
+            do {
+                destination = nextCirclePoint(destination);
+            } while (map.outOfBounds(destination));
+            state.next = destination;
         }
-        if (start.getY() >= map.size() - 2 && map.isColumnClean(start.getX())) {
-            state.verticalDirection = Direction.UP;
-            nextAction = new Move(state.horizontalDirection);
-            return true;
-        }
-
-        // Check the previous position in case we switched column early and there is dirt on the
-        // border.
-        Coordinates prevPos = new Coordinates(start).move(state.verticalDirection.inverse());
-        if (prevPos.getY() >= 0 && prevPos.getY() <= map.size() - 1
-            && map.isDirty(prevPos.getX(), prevPos.getY())) {
-            nextAction = new Move(state.verticalDirection.inverse());
-            return true;
-        }
-        Coordinates nextPos = new Coordinates(start).move(state.verticalDirection);
-        if (nextPos.getY() >= 0 && nextPos.getY() <= map.size() - 1) {
-            nextAction = new Move(state.verticalDirection);
-            return true;
-        }
-        nextAction = null;
-        return false;
+        nextAction = new Move(directionTowards(state.next));
+        return true;
     }
 
     Action getNextMove() {
@@ -93,10 +51,73 @@ class Solver {
     void setSerializableState(Serializable state) {
         this.state = (SolverState) state;
     }
+
+    /**
+     * "Circular" motion: start from going right, then down, then left, then up.
+     * When we reach the top right corner, increment the radius.
+     */
+    private Coordinates nextCirclePoint(Coordinates current) {
+        final int xDistance = current.getX() - state.center.getX();
+        final int yDistance = current.getY() - state.center.getY();
+        Coordinates result = new Coordinates(current);
+        if (Math.abs(xDistance) == Math.abs(yDistance)) {
+            // Corner.
+            if (yDistance <= 0) {
+                // North: rotate if left, expand if right. In the end it's the same.
+                return result.move(Direction.RIGHT);
+            } else if (xDistance > 0) {
+                // South east: rotate.
+                return result.move(Direction.LEFT);
+            } else {
+                // South west: rotate.
+                assert xDistance != 0 : "This means y=0.";
+                return result.move(Direction.UP);
+            }
+        } else {
+            // Edge: keep going.
+            if (Math.abs(xDistance) < Math.abs(yDistance)) {
+                // Moving along X.
+                assert yDistance != 0 : "abs(x) would have to be < 0.";
+                if (yDistance < 0) {
+                    // North.
+                    return result.move(Direction.RIGHT);
+                } else {
+                    // South.
+                    return result.move(Direction.LEFT);
+                }
+            } else {
+                assert xDistance != 0 : "abs(y) would have to be < 0.";
+                if (xDistance > 0) {
+                    // East.
+                    return result.move(Direction.DOWN);
+                } else {
+                    // West.
+                    return result.move(Direction.UP);
+                }
+            }
+        }
+    }
+
+    private Direction directionTowards(Coordinates destination) {
+        if (start.getX() > destination.getX()) {
+            return Direction.LEFT;
+        }
+        if (start.getX() < destination.getX()) {
+            return Direction.RIGHT;
+        }
+        if (start.getY() > destination.getY()) {
+            return Direction.UP;
+        }
+        if (start.getY() < destination.getY()) {
+            return Direction.DOWN;
+        }
+        assert false;
+        return null;
+    }
 }
 
 class SolverState implements Serializable {
-    Direction verticalDirection;
-    Direction horizontalDirection;
+    Coordinates center;
+    Coordinates next;
 }
 

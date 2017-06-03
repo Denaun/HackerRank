@@ -37,7 +37,7 @@ public class Coordinates implements Serializable {
         return this;
     }
 
-    int getL1DistanceFrom(Coordinates other) {
+    public int getL1DistanceFrom(Coordinates other) {
         return Math.abs(x - other.x) + Math.abs(y - other.y);
     }
 

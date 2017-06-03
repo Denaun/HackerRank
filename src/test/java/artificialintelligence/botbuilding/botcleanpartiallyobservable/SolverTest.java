@@ -91,7 +91,7 @@ public class SolverTest {
                                                           new Coordinates(1, 1)));
         int steps = solve(validator, true);
         Assert.assertTrue(validator.isFinished());
-        Assert.assertEquals(9, steps);
+        Assert.assertEquals(3, steps);
     }
 
     @Test
@@ -107,7 +107,7 @@ public class SolverTest {
                                                           new Coordinates(2, 3)));
         int steps = solve(validator, true);
         Assert.assertTrue(validator.isFinished());
-        Assert.assertEquals(37, steps);
+        Assert.assertEquals(23, steps);
     }
 
     @Test
@@ -147,6 +147,6 @@ public class SolverTest {
         }
         double averageSteps = (double) totalSteps / tests;
         System.err.println(averageSteps);
-        Assert.assertTrue(averageSteps < 34);
+        Assert.assertTrue(averageSteps < 19);
     }
 }

@@ -147,6 +147,6 @@ public class SolverTest {
         }
         double averageSteps = (double) totalSteps / tests;
         System.err.println(averageSteps);
-        Assert.assertTrue(averageSteps < 19);
+        Assert.assertTrue(averageSteps < 20);
     }
 }

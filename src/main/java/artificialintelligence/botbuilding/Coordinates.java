@@ -1,6 +1,8 @@
 package artificialintelligence.botbuilding;
 
-public class Coordinates {
+import java.io.Serializable;
+
+public class Coordinates implements Serializable {
     private int x;
     private int y;
 
@@ -35,7 +37,7 @@ public class Coordinates {
         return this;
     }
 
-    int getL1DistanceFrom(Coordinates other) {
+    public int getL1DistanceFrom(Coordinates other) {
         return Math.abs(x - other.x) + Math.abs(y - other.y);
     }
 
@@ -45,6 +47,14 @@ public class Coordinates {
 
     public int getY() {
         return y;
+    }
+
+    @Override
+    public String toString() {
+        return "Coordinates{" +
+               "x=" + x +
+               ", y=" + y +
+               '}';
     }
 
     @Override
